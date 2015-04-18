@@ -3,7 +3,8 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "adminUsername": {
-      "type": "string",
+        "type": "string",
+        "defaultValue": "mark",
       "metadata": {
         "Description": "Admin username used when provisioning virtual machines"
       }
@@ -52,7 +53,7 @@
     },
     "numberOfSlaves": {
       "type": "int",
-      "defaultValue": 10,
+      "defaultValue": 100,
       "metadata": {
         "Description": "Number of Slave nodes"
       }
@@ -79,25 +80,29 @@
       }
     },
     "sshKeyData": {
-      "type": "string",
+        "type": "string",
+        "defaultValue": "MIID1TCCAr2gAwIBAgIJAMTQIs4kufXBMA0GCSqGSIb3DQEBCwUAMIGBMQswCQYDVQQGEwJVUzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQBgNVBAoMCU1pY3Jvc29mdDELMAkGA1UECwwCRFgxDzANBgNVBAMMBmhhaXNoaTEhMB8GCSqGSIb3DQEJARYSaGJhaUBtaWNyb3NvZnQuY29tMB4XDTE1MDQxNzIwMzEzOFoXDTE2MDQxNjIwMzEzOFowgYExCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJXQTEQMA4GA1UEBwwHUmVkbW9uZDESMBAGA1UECgwJTWljcm9zb2Z0MQswCQYDVQQLDAJEWDEPMA0GA1UEAwwGaGFpc2hpMSEwHwYJKoZIhvcNAQkBFhJoYmFpQG1pY3Jvc29mdC5jb20wggEgMA0GCSqGSIb3DQEBAQUAA4IBDQAwggEIAoIBAQCDQolTLw2NbrVmKVO5Pw++VkYC2nrJfSik7nI9CmZBipo3RDYym24U1SWjYfScror8tByNq1E9f3KKgowXp256gBUrJ4z6epD3pOz+qKGCql1Oz0fd3VwNu7F0tgq9hDiodt2d9ipMxXBL/NnOA7u7oO70Rf6if9iRrb6R4CZ+9cg3dATHuCgvb+2qeme+Q+imKej48AiVk2/4KzF6TnzTFgysJEtX43yfOkyG8ag4zsNaXIyZn2Ep5+Rs90jusknMHnqTtNTvYmbqdqS3JYx0Z2Gp3V0/CBvCAQvrU51byWxwXmIj12q5xcLX4Y4d6dMRIpbJrCSgXkBE7eFtuoRrAgElo1AwTjAdBgNVHQ4EFgQU31UFyrJAPJ+r5lLibArOBISE39EwHwYDVR0jBBgwFoAU31UFyrJAPJ+r5lLibArOBISE39EwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAJw+INEKVlm7AYEGfGGumfBGuIcDQ4le6jt7udFrNdIR5/adQZL7cQAnbQKu3SO4w6k0/vJdBCwgZt5UInwY2jNqYvyo4HbvFJExf8ioGzlZwjM1e4wtq9ostLVs+/eUU6Ic4kbwwDA8Bh5m2TmhN0Xcwi0O4xl+zMS5gVFPHdW6cM98uGInYHshk5uQ8Fs/SAReAzDB5czfPtUqNlTVlv4bRPzOG9BZiCqvsBHDtk+XJ9ZYKYnvYwOql/mDKoakhZbIhSdFgUeL94TTtvgwB9XhG/g+4dQL8AArY+8IfwTW+C4hlOOMHNZ77rxVrEGvi6pmPar2PNTN7Tjsbrj2hpg==",
       "metadata": {
         "Description": "Public key for SSH authentication"
       }
     },
     "uuid": {
-      "type": "string",
+        "type": "string",
+        "defaultValue": "azure15dcos1",
       "metadata": {
         "Description": "Globally unique cluster identifier in Azure namespace"
       }
     },
     "azureAccountName": {
-      "type": "string",
+        "type": "string",
+        "defaultValue": "mikebzk",
       "metadata": {
         "Description": "Azure account name used by Exhibitor to persist Zookeeper state"
       }
     },
     "azureAccountKey": {
-      "type": "string",
+        "type": "string",
+        "defaultValue": "Ov+Ihcjk92ktkkX894K/9Fp1coxiDDEwff1xrcNpjDizNMX9i6yTdRbaqEWrzAlegoh7tLOJ+4HTi2+j1CFWFg==",
       "metadata": {
         "Description": "Azure account key used by Exhibitor to persist Zookeeper state"
       }
@@ -111,7 +116,7 @@
     "sourceImageName": "[concat('/', subscription().subscriptionId,'/services/images/',variables('vmSourceImageName'))]",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
     "masterCustomData": "[concat('#cloud-config\n\n', '{\"write_files\": [{\"path\": \"/etc/resolv.conf\", \"content\": \"nameserver 168.63.129.16\"}, {\"permissions\": 420, \"path\": \"/etc/mesosphere/setup-flags/repository-url\", \"content\": \"http://s3.amazonaws.com/downloads.mesosphere.io/dcos/branches/azure/\", \"owner\": \"root\"}, {\"path\": \"/etc/mesosphere/roles/master\"}, {\"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/pkginfo.json\", \"content\": \"{}\"}, {\"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-dns.json\", \"content\": \"{\\n  \\\"zk\\\": \\\"zk://127.0.0.1:2181/mesos\\\",\\n  \\\"refreshSeconds\\\": 60,\\n  \\\"ttl\\\": 60,\\n  \\\"domain\\\": \\\"mesos\\\",\\n  \\\"port\\\": 53,\\n  \\\"resolvers\\\": [\\\"168.63.129.16\\\"],\\n  \\\"timeout\\\": 5,\\n  \\\"listener\\\": \\\"0.0.0.0\\\",\\n  \\\"email\\\": \\\"root.mesos-dns.mesos\\\"\\n}\\n\"}, {\"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-master\", \"content\": \"MESOS_LOG_DIR=/var/log/mesos\\nMESOS_WORK_DIR=/var/lib/mesos/master\\nMESOS_ZK=zk://127.0.0.1:2181/mesos\\nMESOS_QUORUM=1\\nMESOS_CLUSTER=', parameters('uuid'),'\\nMESOS_HOSTNAME=$private_ipv4\\nMESOS_IP=$private_ipv4\\n\"}, {\"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/cloudenv\", \"content\": \"MASTER_ELB=127.0.0.1\\nZOOKEEPER_CLUSTER_SIZE=1\\nFALLBACK_DNS=168.63.129.16\\nMARATHON_HOSTNAME=$private_ipv4\\n\"}, {\"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/exhibitor\", \"content\": \"AZURE_CONTAINER=apollo-exhibitor\\nAZURE_PREFIX=', parameters('uuid'),'\\nAZURE_ACCOUNT_NAME=', parameters('azureAccountName'),'\\nAZURE_ACCOUNT_KEY=', parameters('azureAccountKey'),'\\nEXHIBITOR_WEB_UI_PORT=8181\\nEXHIBITOR_HOSTNAME=$private_ipv4\\n\"}], \"coreos\": {\"units\": [{\"mask\": true, \"name\": \"systemd-resolved.service\", \"command\": \"stop\"}, {\"mask\": true, \"name\": \"etcd.service\", \"command\": \"stop\"}, {\"name\": \"config-writer.service\", \"command\": \"start\", \"content\": \"[Unit]\\nDescription=Write out dynamic config values\\n[Service]\\nType=oneshot\\nEnvironmentFile=/etc/environment\\n# Marathon depends on `hostname` resolution working\\nExecStart=/usr/bin/bash -c \\\"echo ${COREOS_PRIVATE_IPV4} $(hostname) > /etc/hosts\\\"\\n\"}, {\"name\": \"dcos-download.service\", \"content\": \"[Unit]\\nDescription=Download the DCOS\\nAfter=network-online.target\\nWants=network-online.target\\nConditionPathExists=!/opt/mesosphere/\\n[Service]\\nType=oneshot\\nExecStartPre=/usr/bin/curl http://s3.amazonaws.com/downloads.mesosphere.io/dcos/branches/azure/bootstrap.tar.xz -o /tmp/bootstrap.tar.xz\\nExecStartPre=/usr/bin/mkdir -p /opt/mesosphere\\nExecStart=/usr/bin/tar -xf /tmp/bootstrap.tar.xz -C /opt/mesosphere\\n\"}, {\"name\": \"dcos-setup.service\", \"command\": \"start\", \"content\": \"[Unit]\\nDescription=Prep the Pkgpanda working directories for this host.\\nRequires=dcos-download.service\\nAfter=dcos-download.service\\n[Service]\\nType=oneshot\\nEnvironmentFile=/opt/mesosphere/environment\\nExecStart=/opt/mesosphere/bin/pkgpanda setup\\n[Install]\\nWantedBy=multi-user.target\\n\", \"enable\": true}], \"update\": {\"reboot-strategy\": \"off\"}}}')]",
-    "slaveCustomData": "[concat('#cloud-config\n\n', '{\"write_files\": [{\"content\": \"nameserver 168.63.129.16\", \"path\": \"/etc/resolv.conf\"}, {\"owner\": \"root\", \"path\": \"/etc/mesosphere/setup-flags/repository-url\", \"permissions\": 420, \"content\": \"http://s3.amazonaws.com/downloads.mesosphere.io/dcos/branches/azure/\"}, {\"path\": \"/etc/mesosphere/roles/slave\"}, {\"content\": \"{}\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/pkginfo.json\"}, {\"content\": \"MESOS_MASTER=zk://leader.mesos:2181/mesos\\nMESOS_CONTAINERIZERS=docker,mesos\\nMESOS_LOG_DIR=/var/log/mesos\\nMESOS_EXECUTOR_REGISTRATION_TIMEOUT=5mins\\nMESOS_ISOLATION=cgroups/cpu,cgroups/mem\\nMESOS_WORK_DIR=/var/lib/mesos/slave\\nMESOS_RESOURCES=ports:[1025-2180,2182-3887,3889-5049,5052-8079,8082-65535]\\nMESOS_HOSTNAME=$private_ipv4\\nMESOS_IP=$private_ipv4\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-slave\"}, {\"content\": \"MASTER_ELB=master0-', parameters('uuid'),'.southeastasia.cloudapp.azure.com\\nFALLBACK_DNS=168.63.129.16\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/cloudenv\"}], \"coreos\": {\"update\": {\"reboot-strategy\": \"off\"}, \"units\": [{\"command\": \"stop\", \"name\": \"systemd-resolved.service\", \"mask\": true}, {\"command\": \"stop\", \"name\": \"etcd.service\", \"mask\": true}, {\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Write out dynamic config values\\n[Service]\\nType=oneshot\\nEnvironmentFile=/etc/environment\\n# Marathon depends on `hostname` resolution working\\nExecStart=/usr/bin/bash -c \\\"echo ${COREOS_PRIVATE_IPV4} $(hostname) > /etc/hosts\\\"\\n\", \"name\": \"config-writer.service\"}, {\"content\": \"[Unit]\\nDescription=Download the DCOS\\nAfter=network-online.target\\nWants=network-online.target\\nConditionPathExists=!/opt/mesosphere/\\n[Service]\\nType=oneshot\\nExecStartPre=/usr/bin/curl http://s3.amazonaws.com/downloads.mesosphere.io/dcos/branches/azure/bootstrap.tar.xz -o /tmp/bootstrap.tar.xz\\nExecStartPre=/usr/bin/mkdir -p /opt/mesosphere\\nExecStart=/usr/bin/tar -xf /tmp/bootstrap.tar.xz -C /opt/mesosphere\\n\", \"name\": \"dcos-download.service\"}, {\"command\": \"start\", \"enable\": true, \"name\": \"dcos-setup.service\", \"content\": \"[Unit]\\nDescription=Prep the Pkgpanda working directories for this host.\\nRequires=dcos-download.service\\nAfter=dcos-download.service\\n[Service]\\nType=oneshot\\nEnvironmentFile=/opt/mesosphere/environment\\nExecStart=/opt/mesosphere/bin/pkgpanda setup\\n[Install]\\nWantedBy=multi-user.target\\n\"}]}}')]"
+    "slaveCustomData": "[concat('#cloud-config\n\n', '{\"write_files\": [{\"content\": \"nameserver 168.63.129.16\", \"path\": \"/etc/resolv.conf\"}, {\"owner\": \"root\", \"path\": \"/etc/mesosphere/setup-flags/repository-url\", \"permissions\": 420, \"content\": \"http://s3.amazonaws.com/downloads.mesosphere.io/dcos/branches/azure/\"}, {\"path\": \"/etc/mesosphere/roles/slave\"}, {\"content\": \"{}\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/pkginfo.json\"}, {\"content\": \"MESOS_MASTER=zk://leader.mesos:2181/mesos\\nMESOS_CONTAINERIZERS=docker,mesos\\nMESOS_LOG_DIR=/var/log/mesos\\nMESOS_EXECUTOR_REGISTRATION_TIMEOUT=5mins\\nMESOS_ISOLATION=cgroups/cpu,cgroups/mem\\nMESOS_WORK_DIR=/var/lib/mesos/slave\\nMESOS_RESOURCES=ports:[1025-2180,2182-3887,3889-5049,5052-8079,8082-65535]\\nMESOS_HOSTNAME=$private_ipv4\\nMESOS_IP=$private_ipv4\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/mesos-slave\"}, {\"content\": \"MASTER_ELB=master0-', parameters('uuid'),'.eastasia.cloudapp.azure.com\\nFALLBACK_DNS=168.63.129.16\\n\", \"path\": \"/etc/mesosphere/setup-packages/dcos-config--setup/etc/cloudenv\"}], \"coreos\": {\"update\": {\"reboot-strategy\": \"off\"}, \"units\": [{\"command\": \"stop\", \"name\": \"systemd-resolved.service\", \"mask\": true}, {\"command\": \"stop\", \"name\": \"etcd.service\", \"mask\": true}, {\"command\": \"start\", \"content\": \"[Unit]\\nDescription=Write out dynamic config values\\n[Service]\\nType=oneshot\\nEnvironmentFile=/etc/environment\\n# Marathon depends on `hostname` resolution working\\nExecStart=/usr/bin/bash -c \\\"echo ${COREOS_PRIVATE_IPV4} $(hostname) > /etc/hosts\\\"\\n\", \"name\": \"config-writer.service\"}, {\"content\": \"[Unit]\\nDescription=Download the DCOS\\nAfter=network-online.target\\nWants=network-online.target\\nConditionPathExists=!/opt/mesosphere/\\n[Service]\\nType=oneshot\\nExecStartPre=/usr/bin/curl http://s3.amazonaws.com/downloads.mesosphere.io/dcos/branches/azure/bootstrap.tar.xz -o /tmp/bootstrap.tar.xz\\nExecStartPre=/usr/bin/mkdir -p /opt/mesosphere\\nExecStart=/usr/bin/tar -xf /tmp/bootstrap.tar.xz -C /opt/mesosphere\\n\", \"name\": \"dcos-download.service\"}, {\"command\": \"start\", \"enable\": true, \"name\": \"dcos-setup.service\", \"content\": \"[Unit]\\nDescription=Prep the Pkgpanda working directories for this host.\\nRequires=dcos-download.service\\nAfter=dcos-download.service\\n[Service]\\nType=oneshot\\nEnvironmentFile=/opt/mesosphere/environment\\nExecStart=/opt/mesosphere/bin/pkgpanda setup\\n[Install]\\nWantedBy=multi-user.target\\n\"}]}}')]"
   },
   "resources": [
     {
