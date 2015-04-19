@@ -11,7 +11,7 @@
     },
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "azure15dcos1",
+      "defaultValue": "azure15dcos4",
       "metadata": {
         "Description": "Unique namespace for the Storage Account where the Virtual Machine's disks will be placed"
       }
@@ -88,7 +88,7 @@
     },
     "uuid": {
         "type": "string",
-        "defaultValue": "azure15dcos1",
+        "defaultValue": "azure15dcos4",
       "metadata": {
         "Description": "Globally unique cluster identifier in Azure namespace"
       }
