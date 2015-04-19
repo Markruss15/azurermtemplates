@@ -11,7 +11,7 @@
     },
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "uniqueStorageAccountName",
+      "defaultValue": "azure15dcos1",
       "metadata": {
         "Description": "Unique namespace for the Storage Account where the Virtual Machine's disks will be placed"
       }
