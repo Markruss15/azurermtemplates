@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "uuid": {
-          "value": "build15dcos1"
+          "value": "azure15dcos5"
         },
         "storageAccountName": {
-          "value": "build15dcos1"
+          "value": "azure15dcos5"
         },
         "azureAccountName": {
           "value": "mikebzk"
@@ -27,7 +27,7 @@
           "value": "East Asia"
         },
         "virtualNetworkName": {
-          "value": "build15dcos1"
+          "value": "azure15dcos5"
         },
         "vmSizeMasterNodes": {
           "value": "Standard_A3"
